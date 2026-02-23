@@ -20,12 +20,16 @@ body{
   min-height:100svh;
   display:flex;
   justify-content:center;
-  align-items:center;
-  overflow:hidden;
+  align-items:flex-start; /* Fix for mobile layout */
+  overflow-x:hidden;
+  overflow-y:auto; /* Allows scrolling */
 }
 
 /* START */
-#start-screen{text-align:center}
+#start-screen{
+  text-align:center;
+  margin-top:40vh; /* Centers vertically */
+}
 h1{color:var(--pink);margin-bottom:30px}
 .start-btn{
   padding:14px 34px;
@@ -43,10 +47,11 @@ h1{color:var(--pink);margin-bottom:30px}
   width:100%;
   min-height:100svh;
   justify-content:center;
-  align-items:center;
+  align-items:flex-start;
+  align-content:flex-start;
   flex-wrap:wrap;
   gap:20px;
-  padding:20px;
+  padding:40px 20px; /* Gives space at the top/bottom for scrolling */
 }
 
 .card{
@@ -105,6 +110,7 @@ video{
   height:50px;
   animation:fly 5s linear forwards;
   pointer-events:none;
+  z-index:3; /* Ensures floating images appear above the video */
 }
 
 @keyframes fly{
@@ -124,23 +130,23 @@ video{
 
 <div id="cards-container">
   <div class="card" onclick="playVideo('butki')">
-    <img src="butki.png">
+    <img src="butki.png" alt="Butki">
     <div class="name-box">Butki</div>
   </div>
 
   <div class="card" onclick="playVideo('susuar')">
-    <img src="susuar.png">
+    <img src="susuar.png" alt="Susuar">
     <div class="name-box">Susuar</div>
   </div>
 
   <div class="card" onclick="playVideo('momo')">
-    <img src="momo.png">
+    <img src="momo.png" alt="Momo">
     <div class="name-box">Momo</div>
   </div>
 </div>
 
 <div id="video-screen">
-  <video id="video" controls autoplay muted playsinline></video>
+  <video id="video" controls autoplay playsinline></video>
 </div>
 
 <script>
@@ -151,16 +157,19 @@ const videoMap={
 };
 
 function showCards(){
-  start-screen.style.display='none';
-  cards-container.style.display='flex';
+  // Fixed JavaScript variables
+  document.getElementById('start-screen').style.display='none';
+  document.getElementById('cards-container').style.display='flex';
 }
 
 function playVideo(name){
-  cards-container.style.display='none';
-  video-screen.style.display='flex';
+  // Fixed JavaScript variables
+  document.getElementById('cards-container').style.display='none';
+  document.getElementById('video-screen').style.display='flex';
 
   const v=document.getElementById('video');
   v.src=videoMap[name];
+  v.muted=false; // Removed 'muted' from HTML and handled here to ensure sound plays
   v.play();
 
   setInterval(createFloatingImage,400);
@@ -168,7 +177,7 @@ function playVideo(name){
 
 function createFloatingImage(){
   const img=document.createElement('img');
-  img.src='butki.png';
+  img.src='butki.png'; // Note: You might want to pass the specific character's image here!
   img.className='anim-img';
   img.style.left=Math.random()*100+'%';
   document.getElementById('video-screen').appendChild(img);
