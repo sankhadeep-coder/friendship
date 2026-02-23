@@ -6,19 +6,17 @@
 <title>Friendship Surprise</title>
 
 <style>
-:root {
-  --bg-a:#fdfbfb;
-  --bg-b:#ebedee;
+:root{
   --pink:#ff6b6b;
   --teal:#4ecdc4;
 }
 
-* { box-sizing:border-box; }
+*{box-sizing:border-box}
 
-body {
+body{
   margin:0;
   font-family:'Comic Sans MS','Chalkboard SE',sans-serif;
-  background:linear-gradient(135deg,var(--bg-a),var(--bg-b));
+  background:linear-gradient(135deg,#fdfbfb,#ebedee);
   min-height:100svh;
   display:flex;
   justify-content:center;
@@ -26,33 +24,21 @@ body {
   overflow:hidden;
 }
 
-/* START SCREEN */
-#start-screen {
-  text-align:center;
-  width:min(92vw,680px);
-  padding:20px;
-}
-
-h1 {
-  color:var(--pink);
-  text-shadow:2px 2px #ffd1d1;
-  margin-bottom:30px;
-  font-size:clamp(1.7rem,4.8vw,3rem);
-}
-
-.start-btn {
+/* START */
+#start-screen{text-align:center}
+h1{color:var(--pink);margin-bottom:30px}
+.start-btn{
   padding:14px 34px;
-  font-size:clamp(1rem,4vw,1.5rem);
-  background:linear-gradient(45deg,#ff9a9e,#fad0c4);
+  font-size:1.2rem;
   border:none;
   border-radius:999px;
+  background:linear-gradient(45deg,#ff9a9e,#fad0c4);
   color:#fff;
   cursor:pointer;
-  min-height:48px;
 }
 
 /* CARDS */
-#cards-container {
+#cards-container{
   display:none;
   width:100%;
   min-height:100svh;
@@ -60,125 +46,91 @@ h1 {
   align-items:center;
   flex-wrap:wrap;
   gap:20px;
-  background:#fff0f5;
   padding:20px;
 }
 
-.card {
+.card{
   background:#fff;
-  border-radius:20px;
+  width:280px;
   padding:15px;
-  width:clamp(250px,32vw,300px);
+  border-radius:20px;
   text-align:center;
   box-shadow:0 10px 25px rgba(0,0,0,.1);
   cursor:pointer;
   animation:float 3s ease-in-out infinite;
 }
 
-.card img {
+.card img{
   width:100%;
   height:200px;
   object-fit:cover;
   border-radius:15px;
 }
 
-.name-box {
-  margin-top:16px;
-  padding:10px 20px;
-  display:inline-block;
-  position:relative;
+.name-box{
+  margin-top:14px;
   font-weight:bold;
   font-size:1.2rem;
+  position:relative;
 }
 
-.name-box::before {
-  content:'';
-  position:absolute;
-  inset:0;
-  border:2px solid var(--pink);
-  transform:skew(-10deg);
-  z-index:-1;
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-15px)}
 }
 
-.name-box::after {
-  content:'';
-  position:absolute;
-  inset:4px -4px -4px 4px;
-  border:2px solid var(--teal);
-  transform:skew(-10deg);
-  z-index:-2;
-}
-
-@keyframes float {
-  0%,100% { transform:translateY(0); }
-  50% { transform:translateY(-20px); }
-}
-
-/* VIDEO SCREEN */
-#video-screen {
+/* VIDEO */
+#video-screen{
   display:none;
   position:fixed;
   inset:0;
   background:#000;
   justify-content:center;
   align-items:center;
-  z-index:100;
   overflow:hidden;
 }
 
-/* 9:16 VIDEO WRAPPER */
-.video-wrapper {
+video{
   width:min(90vw,420px);
   aspect-ratio:9/16;
   border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 0 40px rgba(255,107,107,.5);
-  z-index:102;
-}
-
-.video-wrapper iframe {
-  width:100%;
-  height:100%;
-  border:none;
+  box-shadow:0 0 40px rgba(255,107,107,.6);
+  z-index:2;
 }
 
 /* FLOATING IMAGES */
-.anim-img {
+.anim-img{
   position:absolute;
-  width:60px;
-  height:60px;
-  border-radius:50%;
+  width:50px;
+  height:50px;
+  animation:fly 5s linear forwards;
   pointer-events:none;
-  animation:flyUp 5s linear forwards;
-  z-index:101;
 }
 
-@keyframes flyUp {
-  0% { transform:translateY(110vh) scale(.5); opacity:0; }
-  10% { opacity:1; }
-  100% { transform:translateY(-10vh) rotate(360deg) scale(1.2); opacity:0; }
+@keyframes fly{
+  0%{transform:translateY(110vh);opacity:0}
+  10%{opacity:1}
+  100%{transform:translateY(-10vh) rotate(360deg);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<!-- START -->
 <div id="start-screen">
-  <h1>✨ Still angry? 😤 ✨</h1>
+  <h1>Still angry? 😤</h1>
   <button class="start-btn" onclick="showCards()">Click here</button>
 </div>
 
-<!-- CARDS -->
 <div id="cards-container">
   <div class="card" onclick="playVideo('butki')">
     <img src="butki.png">
     <div class="name-box">Butki</div>
   </div>
 
-  <div class="card" onclick="playVideo('sususuar')">
-    <img src="sususuar.png">
-    <div class="name-box">Sususuar</div>
+  <div class="card" onclick="playVideo('susuar')">
+    <img src="susuar.png">
+    <div class="name-box">Susuar</div>
   </div>
 
   <div class="card" onclick="playVideo('momo')">
@@ -187,73 +139,39 @@ h1 {
   </div>
 </div>
 
-<!-- VIDEO -->
 <div id="video-screen">
-  <div class="video-wrapper">
-    <iframe id="yt-frame"
-      allow="autoplay; encrypted-media; picture-in-picture"
-      allowfullscreen>
-    </iframe>
-  </div>
-  <a id="yt-fallback" href="#" target="_blank" rel="noopener noreferrer"
-     style="position:absolute;bottom:24px;left:50%;transform:translateX(-50%);color:#fff;text-decoration:underline;font-size:14px;">
-    If video does not load, open on YouTube
-  </a>
+  <video id="video" controls autoplay muted playsinline></video>
 </div>
 
 <script>
-let floatingInterval = null;
-const videoMap = {
-  butki: 'https://drive.google.com/file/d/1fURqbwK5q_JxEuo1H0jnT6agoI_Qxxon/preview',
-  sususuar: 'https://drive.google.com/file/d/1XDCmoW5bz-_JXkYo19JGvu_doQhH0O7x/preview',
-  momo: 'https://drive.google.com/file/d/1tUvJcfNPOyZidrnOLqmOs0N1xJ13dCoM/preview'
-};
-const fallbackMap = {
-  butki: 'https://drive.google.com/file/d/1fURqbwK5q_JxEuo1H0jnT6agoI_Qxxon/view?usp=drive_link',
-  sususuar: 'https://drive.google.com/file/d/1XDCmoW5bz-_JXkYo19JGvu_doQhH0O7x/view?usp=drive_link',
-  momo: 'https://drive.google.com/file/d/1tUvJcfNPOyZidrnOLqmOs0N1xJ13dCoM/view?usp=drive_link'
+const videoMap={
+  butki:'butki.mp4',
+  susuar:'susuar.mp4',
+  momo:'momo.mp4'
 };
 
-function showCards() {
-  document.getElementById('start-screen').style.display='none';
-  document.getElementById('cards-container').style.display='flex';
+function showCards(){
+  start-screen.style.display='none';
+  cards-container.style.display='flex';
 }
 
-function playVideo(name) {
-  document.getElementById('cards-container').style.display='none';
-  const screen=document.getElementById('video-screen');
-  screen.style.display='flex';
+function playVideo(name){
+  cards-container.style.display='none';
+  video-screen.style.display='flex';
 
-  const iframe=document.getElementById('yt-frame');
-  iframe.src=videoMap[name] || '';
+  const v=document.getElementById('video');
+  v.src=videoMap[name];
+  v.play();
 
-  const fallback=document.getElementById('yt-fallback');
-  fallback.href=fallbackMap[name] || '#';
-
-  if(floatingInterval) clearInterval(floatingInterval);
-  floatingInterval=setInterval(createFloatingImage,400);
+  setInterval(createFloatingImage,400);
 }
 
-function createFloatingImage() {
-  const screen=document.getElementById('video-screen');
+function createFloatingImage(){
   const img=document.createElement('img');
-
-  const imgs=[
-    'https://placehold.co/60/ff9a9e/fff?text=❤️',
-    'https://placehold.co/60/fad0c4/fff?text=⭐',
-    'https://placehold.co/60/a18cd1/fff?text=😊',
-    'https://placehold.co/60/84fab0/fff?text=🎉'
-  ];
-
-  img.src=imgs[Math.floor(Math.random()*imgs.length)];
+  img.src='butki.png';
   img.className='anim-img';
   img.style.left=Math.random()*100+'%';
-
-  const size=30+Math.random()*50;
-  img.style.width=size+'px';
-  img.style.height=size+'px';
-
-  screen.appendChild(img);
+  document.getElementById('video-screen').appendChild(img);
   setTimeout(()=>img.remove(),5000);
 }
 </script>
